@@ -3,26 +3,30 @@
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <Header></Header>
-    <Index></Index>
+    <!-- <Index></Index> -->
+    <router-view></router-view>
+    <!-- 专门配合路由的标签 -->
     <Footer></Footer>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Header from "./components/Header"
-import Index from "./pages/Index"
-import Footer from "./components/Footer"
+import Header from "./components/Header";
+// import Index from "./pages/Index"
+import { router } from "./routes/router";
+import Footer from "./components/Footer";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     // HelloWorld
     Header,
-    Index,
+    // Index,
     Footer
-  }
-}
+  },
+  router
+};
 </script>
 
 <style>

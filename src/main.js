@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
+import {axios_instance} from './util/axios'
+
+// 挂载在vue
+Vue.prototype.$axios=axios_instance
 
 Vue.config.productionTip = false
 

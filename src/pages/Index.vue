@@ -1,31 +1,36 @@
 <template>
   <div>
+    <!-- 拷贝 index.html  头 和 脚 之间的代码 -->
     <!--banner-->
     <div class="banner">
+      <!-- 练习：编写banner的html和css-->
       <!-- 图片列表-->
       <ul>
-        <li>
-          <a href="#" class="link"></a>
-        </li>
-        <li>
-          <a href="#" class="link"></a>
-        </li>
-        <li>
-          <a href="#" class="link"></a>
-        </li>
-        <li>
-          <a href="#" class="link"></a>
-        </li>
+        <transition-group name="fade">
+          <!-- 通过:key 规定 哪些元素执行动画切换 -->
+          <li :key="1" v-show="cur==1">
+            <a href="#" class="link"></a>
+          </li>
+          <li :key="2" v-show="cur==2">
+            <a href="#" class="link"></a>
+          </li>
+          <li :key="3" v-show="cur==3">
+            <a href="#" class="link"></a>
+          </li>
+          <li :key="4" v-show="cur==4">
+            <a href="#" class="link"></a>
+          </li>
+        </transition-group>
       </ul>
       <!-- 左右箭头-->
-      <span class="cut prev"></span>
-      <span class="cut next"></span>
+      <span class="cut prev" @click="prevBanner()"></span>
+      <span class="cut next" @click="nextBanner()"></span>
       <!-- 小圆点指示器-->
       <div class="indicator">
-        <a href class="cur"></a>
-        <a href></a>
-        <a href></a>
-        <a href></a>
+        <a href :class="{cur: cur==1}" @click.prevent="cur=1"></a>
+        <a href :class="{cur: cur==2}" @click.prevent="cur=2"></a>
+        <a href :class="{cur: cur==3}" @click.prevent="cur=3"></a>
+        <a href :class="{cur: cur==4}" @click.prevent="cur=4"></a>
       </div>
     </div>
     <!--main-->
@@ -59,7 +64,9 @@
           </h2>
           <p>
             北京净美仕环境科技有限公司自诞生起一直关注人类呼吸健康的问题，并专注于室内空气质量的研究与改善。2003年，非典来袭，环境安全威胁到了每个人的生命，全国陷入一片恐慌。净美仕肩负着为人类创造健康安全生活环境的使命应运而生。2012年7月，亿朗以“净美仕(Mfresh)”为品牌重塑，以崭新的面貌屹立在净化行业。
-            <a href="#">查看更多</a>
+            <a
+              href="#"
+            >查看更多</a>
           </p>
         </div>
         <div class="ind_news">
@@ -92,28 +99,69 @@
 
 <script>
 export default {
-  name:"Index"
+  name: "Index",
+  data() {
+    return {
+      // 当前显示的图片第几张
+      cur: 1,
+      interval: null
+    };
+  },
+  methods: {
+    nextBanner() {
+      if (this.cur == 4) {
+        this.cur = 1;
+      } else {
+        this.cur += 1;
+      }
+    },
+    prevBanner() {
+      //上一页
+      if (this.cur == 1) {
+        this.cur = 4;
+      } else {
+        this.cur -= 1;
+      }
+    }
+  },
+  mounted() {
+    if (!this.interval) {
+      this.interval = setInterval(this.nextBanner, 5000);
+    }
+  }
 };
 </script>
 
 <style>
-/* 在style标签中的图片路径，打包时会自适应 */
-.banner li:first-child{
-  background: url(../assets/images/banner_01.jpg) 
-  center 0 no-repeat; 
+/* 在style标签中的图片路径, 打包时会自适应 */
+.banner li:first-child {
+  background: url(../assets/images/banner_01.jpg) center 0 no-repeat;
   display: block;
-  z-index: 20;
 }
-.banner li:nth-child(2){
-   background: url(../assets/images/banner_02.jpg) 
-   center 0 no-repeat;
+
+.banner li:nth-child(2) {
+  background: url(../assets/images/banner_02.jpg) center 0 no-repeat;
+  display: block;
 }
-.banner li:nth-child(3){
-   background: url(../assets/images/banner_03.jpg) 
-   center 0 no-repeat;
+
+.banner li:nth-child(3) {
+  background: url(../assets/images/banner_03.jpg) center 0 no-repeat;
+  display: block;
 }
-.banner li:last-child{
-   background: url(../assets/images/banner_04.jpg) 
-   center 0 no-repeat;
+
+.banner li:nth-child(4) {
+  background: url(../assets/images/banner_04.jpg) center 0 no-repeat;
+  display: block;
+}
+
+/* 规定切换时的样式,  name='fade' */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
